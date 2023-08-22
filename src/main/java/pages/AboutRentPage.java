@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import static org.junit.Assert.assertTrue;
 import static pages.TestData.*;
 
 public class AboutRentPage {
@@ -25,10 +26,29 @@ public class AboutRentPage {
     protected static final By orderButton = By.xpath(".//button[(contains(@class,'Button_Middle__1CSJM')) and (text() = 'Заказать')]");
     //локатор для кнопки Да ("оформить заказ?")
     protected static final By buttonYes = By.xpath(".//button[text() = 'Да']");
+    //локатор для сообщения успешного заказа
+    protected static final By orderSuccess = By.xpath(".//div[text() ='Заказ оформлен']");
     //локатор для кнопки Нет ("оформить заказ?")
     protected static final By buttonNo = By.xpath(".//button[text() = 'Нет']");
 
     //Методы второй части страницы оформления заказа - Про аренду
+
+    //проверка на экран успеха после кнопки "Да". Можно использовать вейтер(метод закомментирован ниже), тогда тест просто упадет
+    public AboutRentPage screenOrderSuccess(){
+        assertTrue("Переход на экран успеха не произошел", driver.findElements(orderSuccess).size() != 0);
+        return this;
+    }
+    /*метод если надо проверить через вейтер:
+    public AboutRentPage screenOrderSuccess(){
+        new WebDriverWait(driver, Duration.ofSeconds(DEF_TIMEOUT))
+                .until(ExpectedConditions.visibilityOfAllElementsLocatedBy(orderSuccess));
+        return this;
+    }*/
+
+    public AboutRentPage closeFormConfirmOrder(){
+        assertTrue("Форма подтверждения заказа не закрылась", driver.findElements(buttonNo).size() == 0);
+        return this;
+    }
     public AboutRentPage clickButtonNo(){
         driver.findElement(buttonNo).click();
         return this;

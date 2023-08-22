@@ -31,14 +31,14 @@ public class OrderBikePositive {
             .commentForRent()
             .inputStartRent()
             .clickOrderButton()
-            .clickButtonYes(); //Баг - после нажатия кнопки не происходит переход на страницу успеха
-
+            .clickButtonYes()
+            .screenOrderSuccess(); //должен появиться экран успеха Заказ оформлен. Не появляется - баг
     }
 
     //Проверка второй конпки "Заказать" на главной + отказ от оформления заказа
     @Test
 
-    public void mainEtoEPositiveNo() {
+    public void mainEtoEPositiveNo(){
     MainPage mainPage = new MainPage(driverRule.getDriver());
 
     mainPage.openPage()
@@ -57,6 +57,7 @@ public class OrderBikePositive {
                 .commentForRent()
                 .inputStartRent()
                 .clickOrderButton()
-                .clickButtonNo(); //возврат на ввод инфо Про Аренду
+                .clickButtonNo()
+                .closeFormConfirmOrder(); //кнопка Нет отработала и окно подтверждения заказа закрылось
     }
 }
